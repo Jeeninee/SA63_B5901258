@@ -1,0 +1,492 @@
+basePath: /api/v1
+definitions:
+  controllers.Province:
+    properties:
+      district:
+        type: integer
+      name:
+        type: string
+      student:
+        type: integer
+      subdistrict:
+        type: integer
+    type: object
+  ent.District:
+    properties:
+      district:
+        description: District holds the value of the "district" field.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.DistrictEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the DistrictQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+    type: object
+  ent.DistrictEdges:
+    properties:
+      province:
+        description: Province holds the value of the province edge.
+        items:
+          $ref: '#/definitions/ent.Province'
+        type: array
+    type: object
+  ent.Province:
+    properties:
+      edges:
+        $ref: '#/definitions/ent.ProvinceEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the ProvinceQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+      name:
+        description: Name holds the value of the "name" field.
+        type: string
+    type: object
+  ent.ProvinceEdges:
+    properties:
+      district:
+        $ref: '#/definitions/ent.District'
+        description: District holds the value of the district edge.
+        type: object
+      student:
+        $ref: '#/definitions/ent.Student'
+        description: Student holds the value of the student edge.
+        type: object
+      subdistrict:
+        $ref: '#/definitions/ent.Subdistrict'
+        description: Subdistrict holds the value of the subdistrict edge.
+        type: object
+    type: object
+  ent.Student:
+    properties:
+      edges:
+        $ref: '#/definitions/ent.StudentEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the StudentQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+      student:
+        description: Student holds the value of the "student" field.
+        type: string
+    type: object
+  ent.StudentEdges:
+    properties:
+      province:
+        description: Province holds the value of the province edge.
+        items:
+          $ref: '#/definitions/ent.Province'
+        type: array
+    type: object
+  ent.Subdistrict:
+    properties:
+      edges:
+        $ref: '#/definitions/ent.SubdistrictEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the SubdistrictQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+      subdistrict:
+        description: Subdistrict holds the value of the "subdistrict" field.
+        type: string
+    type: object
+  ent.SubdistrictEdges:
+    properties:
+      province:
+        description: Province holds the value of the province edge.
+        items:
+          $ref: '#/definitions/ent.Province'
+        type: array
+    type: object
+  gin.H:
+    additionalProperties: true
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server for SUT SE 2563
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: SUT SA Example API
+  version: "1.0"
+paths:
+  /districts:
+    get:
+      description: list district entities
+      operationId: list-district
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.District'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List district entities
+    post:
+      consumes:
+      - application/json
+      description: Create district
+      operationId: create-district
+      parameters:
+      - description: district entity
+        in: body
+        name: resolution
+        required: true
+        schema:
+          $ref: '#/definitions/ent.District'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.District'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create district
+  /districts/{id}:
+    get:
+      description: get district by ID
+      operationId: get-district
+      parameters:
+      - description: District ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.District'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a district entity by ID
+  /provinces:
+    get:
+      description: list province entities
+      operationId: list-province
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Province'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List province entities
+    post:
+      consumes:
+      - application/json
+      description: Create province
+      operationId: create-province
+      parameters:
+      - description: Province entity
+        in: body
+        name: province
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.Province'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Province'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create province
+  /students:
+    get:
+      description: list student entities
+      operationId: list-student
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Student'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List student entities
+    post:
+      consumes:
+      - application/json
+      description: Create student
+      operationId: create-student
+      parameters:
+      - description: Student entity
+        in: body
+        name: student
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Student'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Student'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create student
+  /students/{id}:
+    get:
+      description: get student by ID
+      operationId: get-student
+      parameters:
+      - description: Student ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Student'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a student entity by ID
+  /subdistricts:
+    get:
+      description: list subdistrict entities
+      operationId: list-subdistrict
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Subdistrict'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List subdistrict entities
+    post:
+      consumes:
+      - application/json
+      description: Create subdistrict
+      operationId: create-subdistrict
+      parameters:
+      - description: subdistrict entity
+        in: body
+        name: resolution
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Subdistrict'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Subdistrict'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create subdistrict
+  /subdistricts/{id}:
+    get:
+      description: get subdistrict by ID
+      operationId: get-subdistrict
+      parameters:
+      - description: Subdistrict ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Subdistrict'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a subdistrict entity by ID
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+  BasicAuth:
+    type: basic
+  OAuth2AccessCode:
+    authorizationUrl: https://example.com/oauth/authorize
+    flow: accessCode
+    scopes:
+      admin: ' Grants read and write access to administrative information'
+    tokenUrl: https://example.com/oauth/token
+    type: oauth2
+  OAuth2Application:
+    flow: application
+    scopes:
+      admin: ' Grants read and write access to administrative information'
+      write: ' Grants write access'
+    tokenUrl: https://example.com/oauth/token
+    type: oauth2
+  OAuth2Implicit:
+    authorizationUrl: https://example.com/oauth/authorize
+    flow: implicit
+    scopes:
+      admin: ' Grants read and write access to administrative information'
+      write: ' Grants write access'
+    type: oauth2
+  OAuth2Password:
+    flow: password
+    scopes:
+      admin: ' Grants read and write access to administrative information'
+      read: ' Grants read access'
+      write: ' Grants write access'
+    tokenUrl: https://example.com/oauth/token
+    type: oauth2
+swagger: "2.0"
